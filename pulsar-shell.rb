@@ -5,7 +5,7 @@ class PulsarShell < Formula
     sha256 "3067d06b7bf45ecd1e887ffe9bebbf2d3c747561967811ee1b3c37be27fb4135"
     license "Apache-2.0"
   
-    depends_on openjdk@11
+    depends_on "openjdk@11"
   
     def install
       libexec.install Dir["*"]
