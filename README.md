@@ -1,4 +1,4 @@
-# Homebrew formulae for Luna Streaming Shell
+# Homebrew formula for Luna Streaming Shell
 
 You can install the latest Luna Streaming shell using:
 
