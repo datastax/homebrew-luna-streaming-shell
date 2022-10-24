@@ -7,6 +7,13 @@ brew install datastax/luna-streaming-shell/pulsar-shell
 pulsar-shell
 ```
 
+or
+
+```
+brew tap datastax/luna-streaming-shell && brew install pulsar-shell
+pulsar-shell
+```
+
 ## Changelog
 
 You can check the Datastax Luna Streaming [changelog](https://github.com/datastax/release-notes/blob/master/Luna_Streaming_2.10_Release_Notes.md) to see what's new.  
