@@ -26,6 +26,6 @@ https://github.com/datastax/homebrew-luna-streaming-shell/blob/9be604a85d904e82b
 ## Install without brew
 
 ```
-curl -Ls "https://raw.githubusercontent.com/datastax/hoembrew-luna-streaming-shell/master/get-pulsar-shell.sh" | bash
+curl -Ls "https://raw.githubusercontent.com/datastax/homebrew-luna-streaming-shell/master/get-pulsar-shell.sh" | bash
 ```
 
