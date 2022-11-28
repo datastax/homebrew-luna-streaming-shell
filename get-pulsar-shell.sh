@@ -29,9 +29,11 @@ ______         _                          _            _  _
                                                            
 "
 
-echo "Installing $(tput setaf 6)Luna Streaming shell $(tput setaf 7) please wait...      "
+echo "Installing $(tput setaf 6)Pulsar shell$(tput setaf 7) please wait...      "
 
-ZIP_DOWNLOAD_URL="https://github.com/datastax/pulsar/releases/download/ls210_2.5/lunastreaming-shell-2.10.2.5-bin.zip"
+DEFAULT_ZIP="https://github.com/datastax/pulsar/releases/download/ls210_2.5/lunastreaming-shell-2.10.2.5-bin.zip"
+ZIP_DOWNLOAD_URL="${1:-$DEFAULT_ZIP}"
+candidate_base_name=$(basename $ZIP_DOWNLOAD_URL)
 
 
 pulsar_shell_root_dir="$HOME/.pulsar-shell"
@@ -44,47 +46,18 @@ mkdir -p $pulsar_shell_candidates_dir
 pulsar_shell_current_symlink="$pulsar_shell_candidates_dir/current"
 mkdir -p $pulsar_shell_candidates_dir
 
-downloaded_zip_path=$pulsar_shell_downloads_dir/$(basename $ZIP_DOWNLOAD_URL)
+downloaded_zip_path=$pulsar_shell_downloads_dir/$candidate_base_name
 downloaded_extracted_dir=${ZIP_DOWNLOAD_URL//-bin\.zip}
 downloaded_extracted_path="$pulsar_shell_candidates_dir/$(basename $downloaded_extracted_dir)"
 
-
-
-# Config Files
-bash_profile="${HOME}/.bash_profile"
-bashrc="${HOME}/.bashrc"
-zshrc="${ZDOTDIR:-${HOME}}/.zshrc"
-init_snipped=$( cat << EOF
-#THIS MUST BE AT THE END OF THE FILE FOR PULSAR_SHELL TO WORK
-export PATH=\$PATH:$pulsar_shell_current_symlink/bin
-EOF
-)
-
-# OS specific support (must be 'true' or 'false').
-cygwin=false;
-darwin=false;
-solaris=false;
-freebsd=false;
-linux=false;
+darwin=false
 case "$(uname)" in
-    CYGWIN*)
-        cygwin=true
-        ;;
     Darwin*)
         darwin=true
         ;;
-    SunOS*)
-        solaris=true
-        ;;
-    FreeBSD*)
-        freebsd=true
-        ;;
-    Linux*)
-        linux=true
-        ;;
 esac
 
-echo "$(tput setaf 2)[OK]$(tput setaf 7) - Ready to install."
+echo "$(tput setaf 2)[OK]$(tput setaf 7) - Ready to install $(basename $downloaded_extracted_dir)."
 
 if ! command -v unzip > /dev/null; then
 	echo "Not found."
@@ -138,29 +111,36 @@ ln -s $downloaded_extracted_path $pulsar_shell_current_symlink
 
 echo "$(tput setaf 2)[OK]$(tput setaf 7) - Pulsar shell installed at $pulsar_shell_candidates_dir"
 
+function inject_if_not_found() {
+    local file=$1
+    touch "$file"
+    if [[ -z $(grep 'pulsar-shell/candidates' "$file") ]]; then
+        echo -e "\n$init_snipped" >> "$file"
+        echo "$(tput setaf 2)[OK]$(tput setaf 7) - pulsar-shell bin added to ${bash_profile}"
+    fi
+}
+
+
+
+bash_profile="${HOME}/.bash_profile"
+bashrc="${HOME}/.bashrc"
+zshrc="${ZDOTDIR:-${HOME}}/.zshrc"
+init_snipped=$( cat << EOF
+export PATH=\$PATH:$pulsar_shell_current_symlink/bin
+EOF
+)
 
 if [[ $darwin == true ]]; then
-  # Adding on MAC OS
-  touch "$bash_profile"
-  if [[ -z $(grep './pulsar-shell' "$bash_profile") ]]; then
-    echo -e "\n$init_snipped" >> "$bash_profile"
-    echo "$(tput setaf 2)[OK]$(tput setaf 7) - astra added to ${bash_profile}"
-  fi
+  inject_if_not_found $bash_profile
 else
-  touch "${bashrc}"
-  if [[ -z $(grep './pulsar-shell' "$bashrc") ]]; then
-      echo -e "\n$init_snipped" >> "$bashrc"
-      echo "$(tput setaf 2)[OK]$(tput setaf 7) - astra added to ${bashrc}"
-  fi
+  inject_if_not_found $bashrc
 fi
 
-touch "$zshrc"
-if [[ -z $(grep './pulsar-shell' "$zshrc") ]]; then
-    echo -e "\n$init_snipped" >> "$zshrc"
-    echo "$(tput setaf 2)[OK]$(tput setaf 7) - astra added to ${zshrc}"
+if [[ -s "$zshrc" ]]; then
+  inject_if_not_found $zshrc
 fi
 
 echo "$(tput setaf 2)[OK]$(tput setaf 7) - Installation Successful"
-echo "Open $(tput setaf 2)A NEW TERMINAL$(tput setaf 7) and run: $(tput setaf 3)pulsar-shell$(tput setaf 7)"
+echo "Open $(tput setaf 2)a new terminal$(tput setaf 7) and run: $(tput setaf 3)pulsar-shell$(tput setaf 7)"
 echo ""
 echo "You can close this window."
