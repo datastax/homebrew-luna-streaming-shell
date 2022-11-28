@@ -2,6 +2,9 @@
 
 ## Getting started
 
+![pulsar-shell-installer](https://user-images.githubusercontent.com/23314389/204251925-c065b0a6-ed40-458e-bc54-760ffb5d7569.gif)
+
+
 ```
 curl -Ls "https://raw.githubusercontent.com/datastax/homebrew-luna-streaming-shell/master/get-pulsar-shell.sh" | bash
 ```
