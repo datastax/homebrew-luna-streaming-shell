@@ -31,7 +31,7 @@ ______         _                          _            _  _
 
 echo "Installing $(tput setaf 6)Pulsar shell$(tput setaf 7) please wait...      "
 
-DEFAULT_ZIP="https://github.com/datastax/pulsar/releases/download/ls210_2.5/lunastreaming-shell-2.10.2.5-bin.zip"
+DEFAULT_ZIP="https://github.com/datastax/pulsar/releases/download/ls210_2.7/lunastreaming-shell-2.10.2.7-bin.zip"
 ZIP_DOWNLOAD_URL="${1:-$DEFAULT_ZIP}"
 candidate_base_name=$(basename $ZIP_DOWNLOAD_URL)
 
