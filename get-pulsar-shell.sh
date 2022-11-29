@@ -116,7 +116,7 @@ function inject_if_not_found() {
     touch "$file"
     if [[ -z $(grep 'pulsar-shell/candidates' "$file") ]]; then
         echo -e "\n$init_snipped" >> "$file"
-        echo "$(tput setaf 2)[OK]$(tput setaf 7) - pulsar-shell bin added to ${bash_profile}"
+        echo "$(tput setaf 2)[OK]$(tput setaf 7) - pulsar-shell bin added to ${file}"
     fi
 }
 
