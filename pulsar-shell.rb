@@ -1,8 +1,8 @@
 class PulsarShell < Formula
     desc "Datastax Luna Streaming Shell for managing Apache Pulsar clusters"
     homepage "https://docs.datastax.com/en/luna-streaming/docs/index.html"
-    url "https://github.com/datastax/pulsar/releases/download/ls31_4.0/lunastreaming-shell-3.1.4.0-bin.tar.gz"
-    sha256 "2d2050750fb58da09cf9a5651b90114d36f8278298ea45b4d8cb408dbfc0911a"
+    url "https://github.com/datastax/pulsar/releases/download/ls31_4.2/lunastreaming-shell-3.1.4.2-bin.tar.gz"
+    sha256 "8608704a69c7d2da48408ee5fe28aa53faae1c6a1ce4888e67b2fd0dc2da3d8d"
     license "Apache-2.0"
   
     depends_on "openjdk@17"
